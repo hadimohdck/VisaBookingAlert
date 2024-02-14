@@ -27,7 +27,6 @@ public class TestBase {
 		String browser_properties=prop.getProperty("browser");
 		String browser_maven=System.getProperty("browser");
 		String browser=browser_maven!=null ? browser_maven:browser_properties;
-		System.out.println(browser);
 		 // Wait for up to 10 seconds
 		if(driver==null)
 		{

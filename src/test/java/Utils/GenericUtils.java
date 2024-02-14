@@ -1,6 +1,8 @@
 package Utils;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.text.DateFormat;
@@ -89,9 +91,13 @@ public class GenericUtils {
 		else
 			return false;
 	}
-	public  void sendEmail(String results, String imagePath) throws MessagingException {
-		final String senderEmail = "visabookingalerts@gmail.com";
-		final String senderPassword = "pqri untz qvsx lmfu";
+	public  void sendEmail(String results, String imagePath) throws MessagingException, IOException {
+		FileInputStream fis=new FileInputStream(System.getProperty("user.dir")+"\\src\\test\\resources\\Global.properties");
+
+		Properties prop=new Properties();
+		prop.load(fis);
+		final String senderEmail = prop.getProperty("FromMail");
+		final String senderPassword =  prop.getProperty("pqri untz qvsx lmfu");
 
 		// Setting up SMTP properties
 		Properties props = new Properties();
@@ -110,7 +116,7 @@ public class GenericUtils {
 			// Creating a message
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(senderEmail));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("hadimohdck@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(prop.getProperty("hadimohdck@gmail.com")));
 			message.setSubject("ALERT!");
 
 			// Creating the email body part
