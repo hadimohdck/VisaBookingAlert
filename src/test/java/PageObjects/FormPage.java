@@ -20,7 +20,7 @@ public class FormPage {
     @Getter
     public By selection1=By.xpath("//*[@id='xi-div-30']/div[2]/label");
     @Getter
-    public By selection2=By.xpath("//p[contains(text(), 'Familiäre Gründe')]");
+    public By selection2=By.xpath("//label[@for='SERVICEWAHL_DE_436-0-2-4']");
     @Getter
     public By selection3=By.xpath("//*[@id='inner-436-0-2']/div/div[6]/div/div[3]/label");
     @Getter

@@ -92,7 +92,7 @@ public class TestStepDefinition {
 
     @Then("User sends mail regarding status of booking")
     public void userSendsMailRegardingStatusOfBooking() throws IOException, MessagingException {
-        if(ts.genericutils.checkifelementispresent(rp.getMessage())) {
+        try{if(ts.genericutils.checkifelementispresent(rp.getMessage())) {
             ts.genericutils.waitForElementVisibility(rp.getMessage());
             String storagepath = ts.genericutils.createFiletoStoreImage();
             String pathname = ts.genericutils.takeScreenshotAndSaveandReturnpath(storagepath);
@@ -102,6 +102,9 @@ public class TestStepDefinition {
             String storagepath = ts.genericutils.createFiletoStoreImage();
             String pathname = ts.genericutils.takeScreenshotAndSaveandReturnpath(storagepath);
             ts.genericutils.sendEmail("No Alert was found on the page. Please check attached SS", pathname);
+        }}
+        catch (Exception e){
+            System.out.println(e.getMessage());
         }
     }
 }
