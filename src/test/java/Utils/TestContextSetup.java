@@ -12,6 +12,7 @@ public class TestContextSetup {
 	public PageObjectManager pom;
 	public TestBase testbase;
 	public GenericUtils genericutils;
+	public String Testype="web";
 	
 	public TestContextSetup() throws IOException {
 		testbase=new TestBase();
