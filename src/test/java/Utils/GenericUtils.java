@@ -97,7 +97,7 @@ public class GenericUtils {
 		Properties prop=new Properties();
 		prop.load(fis);
 		final String senderEmail = prop.getProperty("FromMail");
-		final String senderPassword =  prop.getProperty("pqri untz qvsx lmfu");
+		final String senderPassword =  prop.getProperty("FromMailPwd");
 
 		// Setting up SMTP properties
 		Properties props = new Properties();
@@ -116,7 +116,7 @@ public class GenericUtils {
 			// Creating a message
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(senderEmail));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(prop.getProperty("hadimohdck@gmail.com")));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(prop.getProperty("ToMail")));
 			message.setSubject("ALERT!");
 
 			// Creating the email body part
