@@ -98,13 +98,11 @@ public class TestStepDefinition {
             String pathname = ts.genericutils.takeScreenshotAndSaveandReturnpath(storagepath);
             ts.genericutils.sendEmail("The following error message appeared on screen : "+rp.printmessage(), pathname);
         }
-        else{
+        }
+        catch (Exception e){
             String storagepath = ts.genericutils.createFiletoStoreImage();
             String pathname = ts.genericutils.takeScreenshotAndSaveandReturnpath(storagepath);
             ts.genericutils.sendEmail("No Alert was found on the page. Please check attached SS", pathname);
-        }}
-        catch (Exception e){
-            System.out.println(e.getMessage());
         }
     }
 }
