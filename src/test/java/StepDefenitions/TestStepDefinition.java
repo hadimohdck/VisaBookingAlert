@@ -24,12 +24,12 @@ public class TestStepDefinition {
     public FormPage fp;
     public resultpage rp;
 
-    public TestStepDefinition(TestContextSetup ts){
-        this.ts=ts;
-        this.vlp=ts.pom.getVisaLandingPage();
-        this.tncp=ts.pom.getTncPage();
-        this.fp=ts.pom.getFormPage();
-        this.rp=ts.pom.getresultpage();
+    public TestStepDefinition(TestContextSetup ts) {
+        this.ts = ts;
+        this.vlp = ts.pom.getVisaLandingPage();
+        this.tncp = ts.pom.getTncPage();
+        this.fp = ts.pom.getFormPage();
+        this.rp = ts.pom.getresultpage();
 
     }
 
@@ -91,14 +91,28 @@ public class TestStepDefinition {
     }
 
     @Then("User sends mail regarding status of booking")
-    public void userSendsMailRegardingStatusOfBooking() throws IOException, MessagingException {
+    public void userSendsMailRegardingStatusOfBooking() throws IOException, MessagingException, InterruptedException {
         ts.genericutils.waitForElementVisibility(rp.getActiveheader());
-        if(rp.getheadertext().contains("3")){
-            String storagepath = ts.genericutils.createFiletoStoreImage();
-            String pathname = ts.genericutils.takeScreenshotAndSaveandReturnpath(storagepath);
-            ts.genericutils.sendEmail("The booking has opened. Please check the attached Screenshot", pathname);
-        } else if (rp.getheadertext().contains("2")) {
-            System.out.println("The booking slots are closed");
+        int flag = 0;
+        for (int i = 0; i < 30; i++) {
+            if (rp.getheadertext().contains("3")) {
+                String storagepath = ts.genericutils.createFiletoStoreImage();
+                String pathname = ts.genericutils.takeScreenshotAndSaveandReturnpath(storagepath);
+                ts.genericutils.sendEmail("The booking has opened. Please check the attached Screenshot", pathname);
+                flag = 1;
+                break;
+            } else {
+                Thread.sleep(15000);
+                ts.genericutils.ScrolltoBottom();
+                ts.genericutils.waitForElementVisibility(fp.getWieterbtn());
+                ts.genericutils.waitForElementClickability(fp.getWieterbtn());
+                fp.clickWeiterBtn();
+            }
+            System.out.println("Try number : " + i);
         }
+        if (flag == 0) {
+            System.out.println("No slots open yet");
+        }
+
     }
 }
