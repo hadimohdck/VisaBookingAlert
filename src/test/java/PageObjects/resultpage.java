@@ -11,7 +11,14 @@ public class resultpage {
     }
     @Getter
     public By message= By.xpath("//li[@class='errorMessage']");
+    @Getter
+    public By activeheader=By.xpath("//li[@class='antcl_active']");
+
     public String printmessage(){
         return driver.findElement(message).getText();
+    }
+
+    public String getheadertext(){
+        return driver.findElement(activeheader).getText();
     }
 }

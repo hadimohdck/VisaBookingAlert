@@ -92,17 +92,13 @@ public class TestStepDefinition {
 
     @Then("User sends mail regarding status of booking")
     public void userSendsMailRegardingStatusOfBooking() throws IOException, MessagingException {
-        try{if(ts.genericutils.checkifelementispresent(rp.getMessage())) {
-            ts.genericutils.waitForElementVisibility(rp.getMessage());
+        ts.genericutils.waitForElementVisibility(rp.getActiveheader());
+        if(rp.getheadertext().contains("3")){
             String storagepath = ts.genericutils.createFiletoStoreImage();
             String pathname = ts.genericutils.takeScreenshotAndSaveandReturnpath(storagepath);
-            ts.genericutils.sendEmail("The following error message appeared on screen : "+rp.printmessage(), pathname);
-        }
-        }
-        catch (Exception e){
-            String storagepath = ts.genericutils.createFiletoStoreImage();
-            String pathname = ts.genericutils.takeScreenshotAndSaveandReturnpath(storagepath);
-            ts.genericutils.sendEmail("No Alert was found on the page. Please check attached SS", pathname);
+            ts.genericutils.sendEmail("The booking has opened. Please check the attached Screenshot", pathname);
+        } else if (rp.getheadertext().contains("2")) {
+            System.out.println("The booking slots are closed");
         }
     }
 }
