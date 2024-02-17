@@ -18,6 +18,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class TestBase {
 	public WebDriver driver;
+	//method used to configure the driver
 	public WebDriver WebDriverManager() throws IOException {
 		
 		FileInputStream fis=new FileInputStream(System.getProperty("user.dir")+"\\src\\test\\resources\\Global.properties");

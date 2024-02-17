@@ -40,7 +40,7 @@ public class GenericUtils {
 
         this.driver = driver;
     }
-
+    //General util used to switch between handles
     public void SwitchWindowToChild() {
 
         Set<String> s1 = driver.getWindowHandles();
@@ -49,29 +49,29 @@ public class GenericUtils {
         String childWindow = i1.next();
         driver.switchTo().window(childWindow);
     }
-
+    //Function used for a short scroll down
     public void shortScrollDown() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollTo(300,500)");
     }
-
+    //Function used to Scroll to the bottom of the page
     public void ScrolltoBottom() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
     }
-
+    //function used to wait for element visibility
     public void waitForElementVisibility(By locator) {
         long timout = 60;
         WebDriverWait wait = new WebDriverWait(this.driver, Duration.ofSeconds(timout));
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
-
+    //function used to wait for element click-ability
     public void waitForElementClickability(By locator) {
         long timout = 60;
         WebDriverWait wait = new WebDriverWait(this.driver, Duration.ofSeconds(timout));
         wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
-
+    //function used to take screenshot of the booking page and to return the path where it is stored
     public String takeScreenshotAndSaveandReturnpath(String filePath) throws IOException {
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(screenshot, new File(filePath + ".png"));
@@ -79,7 +79,7 @@ public class GenericUtils {
 
 
     }
-
+    //creates a file to store the image internally within the project
     public String createFiletoStoreImage() throws IOException {
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
         String timestamp = dateFormat.format(new Date()); // Get current timestamp
@@ -91,14 +91,36 @@ public class GenericUtils {
         }
         return file.getAbsolutePath();
     }
-
+    //custom function to check if an element is present
     public boolean checkifelementispresent(By elementlocator) {
         if (driver.findElement(elementlocator).isDisplayed()) {
             return true;
         } else
             return false;
     }
-
+    //function to trigger sound notification
+    public void triggerNotification(String message) {
+        String osName = System.getProperty("os.name").toLowerCase();
+        String osVersion = System.getProperty("os.version").toLowerCase();
+        try {
+            if (osName.contains("win")) {
+                String[] cmd = {
+                        "powershell",
+                        "Add-Type -AssemblyName System.Speech; $speak = New-Object System.Speech.Synthesis.SpeechSynthesizer; $speak.Speak('Alert! Attention required!');"
+                };
+                Runtime.getRuntime().exec(cmd);
+            } else if (osName.contains("mac")) {
+                Runtime.getRuntime().exec(new String[]{"say", "Alert! Attention required!"});
+            } else if (osVersion.contains("wsl")) {
+                Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", "powershell.exe -c \"(New-Object -ComObject SAPI.SpVoice).Speak('Alert! Attention required!')\"\n"});
+            } else {
+                // Handle other operating systems
+            }
+        } catch (IOException e) {
+            System.out.println("Failed to notify. Reason: "+ e);
+        }
+    }
+    //function to send Email
     public void sendEmail(String results, String imagePath) throws MessagingException, IOException {
         FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "\\src\\test\\resources\\Global.properties");
 

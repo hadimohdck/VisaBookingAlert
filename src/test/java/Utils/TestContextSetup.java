@@ -13,7 +13,7 @@ public class TestContextSetup {
 	public TestBase testbase;
 	public GenericUtils genericutils;
 	public String Testype="Web";
-	
+	//constructor that creates an instance of webdriver through testbase and distributes it to the page objects through PageObjectManager and GenericUtils
 	public TestContextSetup() throws IOException {
 		testbase=new TestBase();
 		pom=new PageObjectManager(testbase.WebDriverManager());

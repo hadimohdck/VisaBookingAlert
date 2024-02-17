@@ -97,6 +97,7 @@ public class TestStepDefinition {
         for (int i = 0; i < 30; i++) {
             if (rp.getheadertext().contains("3")) {
                 String storagepath = ts.genericutils.createFiletoStoreImage();
+                ts.genericutils.triggerNotification("Booking has opened");
                 String pathname = ts.genericutils.takeScreenshotAndSaveandReturnpath(storagepath);
                 ts.genericutils.sendEmail("The booking has opened. Please check the attached Screenshot", pathname);
                 flag = 1;
