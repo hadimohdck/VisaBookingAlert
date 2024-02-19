@@ -1,5 +1,6 @@
 package Utils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -21,7 +22,7 @@ public class TestBase {
 	//method used to configure the driver
 	public WebDriver WebDriverManager() throws IOException {
 		
-		FileInputStream fis=new FileInputStream(System.getProperty("user.dir")+"\\src\\test\\resources\\Global.properties");
+		FileInputStream fis=new FileInputStream(System.getProperty("user.dir")+ File.separator+"src"+File.separator+"test"+File.separator+"resources"+File.separator+"Global.properties");
 		Properties prop=new Properties();
 		prop.load(fis);
 		String url=prop.getProperty("QAurl");
@@ -32,7 +33,7 @@ public class TestBase {
 		if(driver==null)
 		{
 			if(browser.equalsIgnoreCase("chrome")) 
-			{	System.getProperty("webdriver.chrome.driver",System.getProperty("user.dir")+"\\src\\test\\resources\\chromedriver.exe");
+			{	System.getProperty("webdriver.chrome.driver",System.getProperty("user.dir")+File.separator+"src"+File.separator+"test"+File.separator+"resources"+File.separator+"chromedriver.exe");
 				ChromeOptions options = new ChromeOptions();
 				options.addArguments("--disable-dev-shm-usage");
 				options.addArguments("--remote-allow-origins=*");
@@ -54,7 +55,7 @@ public class TestBase {
 			}
 			if(browser.equalsIgnoreCase("firefox"))
 			{	driver=new FirefoxDriver();
-				System.getProperty("webdriver.gecho.driver",System.getProperty("user.dir")+"\\src\\test\\resources\\geckodriver.exe");			
+				System.getProperty("webdriver.gecho.driver",System.getProperty("user.dir")+File.separator+"src"+File.separator+"test"+File.separator+"resources"+File.separator+"geckodriver.exe");
 			}
 
 			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
